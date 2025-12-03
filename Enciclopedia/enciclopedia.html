@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascota - Enciclopedia</title>
+    <link rel="stylesheet" href="/Enciclopedia/enciclopedia.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🐾 Mundo Mascota</div>
+        <nav>
+            <ul>
+                <li><a href="/PaginaPrincipal/index.html" class="nav-link">Inicio</a></li>
+                <li><a href="/Enciclopedia/enciclopedia.html" class="nav-link">Enciclopedia</a></li>
+                <li><a href="/Contacto/contacto.html" class="nav-link">Contacto</a></li>
+                <li><a href="/Auth/login.html" class="nav-link">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="enciclopedia-completa" class="seccion">
+            
+            <div id="intro-explicacion">
+                <h1>Preparándote para la Adopción</h1>
+                <h3>Conoce el Mundo de Razas antes de tomar tu decisión.</h3>
+                
+                <p style="max-width: 900px; margin: 0 auto 20px;">
+                    Adoptar una mascota es un compromiso de vida. Nuestra enciclopedia interactiva te ofrece una visión detallada de diferentes tipos de animales y sus razas para ayudarte a **comprender sus necesidades, temperamentos y cuidados específicos**. No busques solo el animal más bonito, busca el compañero que mejor se adapte a tu estilo de vida.
+                </p>
+                <p style="max-width: 900px; margin: 0 auto 40px; font-weight: bold;">
+                    Explora, infórmate y elige con el corazón y la cabeza.
+                </p>
+                
+                <hr style="width: 50%; margin: 40px auto; border: 0; border-top: 1px solid var(--color-principal);">
+            </div>
+            
+            <h2 id="selector-titulo">Elige el Tipo de Mascota que te Interesa</h2>
+            <p id="selector-subtitulo">Haz clic en una categoría para ver las 10 razas más populares y sus detalles.</p>
+
+            <div class="enciclopedia-grid-tipos" id="tipos-grid">
+
+                <div class="animal-card" data-animal="perro">
+                    <img src="./imagenesAnimales/logoPerro.png" alt="Perro" class="animal-img">
+                    <p class="animal-name">Perros</p>
+                </div>
+
+                <div class="animal-card" data-animal="gato">
+                    <img src="./imagenesAnimales/logoGato.png" alt="Gato" class="animal-img">
+                    <p class="animal-name">Gatos</p>
+                </div>
+
+            </div>
+            
+            <div id="razas-container" style="display: none;">
+                </div>
+            
+        </section>
+        
+    </main>
+
+    <script src="/PaginaPrincipal/cookies.js"></script>
+    <script src="/Enciclopedia/script.js"></script>
+    <script src="/Enciclopedia/enciclopedia.js"></script>
+    <script>
+        // Mostrar nombre de usuario si está autenticado
+        document.addEventListener('DOMContentLoaded', () => {
+            // Esperar a que cookies.js se ejecute primero
+            setTimeout(() => {
+                const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+                const authLink = document.querySelector('a[href="/Auth/login.html"]');
+                if (usuario && usuario.username && authLink) {
+                    // Crear menú desplegable
+                    authLink.style.display = 'none';
+                    const li = authLink.parentElement;
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'user-menu-wrapper';
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'user-menu-btn';
+                    btn.textContent = usuario.username;
+                    
+                    const dropdown = document.createElement('div');
+                    dropdown.className = 'user-dropdown';
+                    dropdown.innerHTML = '<button class="logout-btn">Cerrar sesión</button>';
+                    
+                    wrapper.appendChild(btn);
+                    wrapper.appendChild(dropdown);
+                    li.appendChild(wrapper);
+                    
+                    btn.addEventListener('click', () => {
+                        dropdown.classList.toggle('show');
+                    });
+                    
+                    document.addEventListener('click', (e) => {
+                        if (!wrapper.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+                    
+                    const logoutBtn = dropdown.querySelector('.logout-btn');
+                    logoutBtn.addEventListener('click', () => {
+                        localStorage.removeItem('usuarioActual');
+                        localStorage.removeItem('token');
+                        window.location.href = '/Auth/login.html';
+                    });
+                }
+            }, 100);
+        });
+    </script>
+    <!-- Modal de información y publicaciones -->
+    <div id="razaModal" class="modal" aria-hidden="true">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
+            <h2 id="modalTitle">Información</h2>
+            <p id="modalRazaDesc">Descripción de la raza...</p>
+
+            <section class="post-section">
+                <h3>Publicaciones de esta raza</h3>
+
+                <div id="mustLogin" class="must-login" style="display:none;">
+                    Debes <a href="/Auth/login.html">iniciar sesión</a> o <a href="/Auth/registro.html">registrarte</a> para subir fotos.
+                </div>
+
+                <form id="postForm" class="post-form">
+                    <label for="postImage">Selecciona una foto</label>
+                    <input type="file" id="postImage" accept="image/*">
+                    <label for="postCaption">Descripción (opcional)</label>
+                    <input type="text" id="postCaption" placeholder="Cuenta la historia de tu amigo...">
+                    <button type="submit" class="cta-button">Publicar foto</button>
+                </form>
+
+                <div id="postsList" class="posts-list"></div>
+            </section>
+        </div>
+    </div>
+    <!-- Photo preview modal -->
+    <div id="photoPreviewModal" class="photo-modal" aria-hidden="true">
+        <div class="photo-modal-overlay" id="photoModalOverlay"></div>
+        <div class="photo-modal-content" role="dialog" aria-modal="true" aria-labelledby="photoModalTitle">
+            <button class="modal-close" id="photoModalClose" aria-label="Cerrar">×</button>
+            <img id="previewImage" src="" alt="Preview" style="max-width:100%; display:block; margin:0 auto; border-radius:8px;">
+            <div id="previewCaption" style="margin-top:10px; color:var(--color-texto); text-align:center;"></div>
+        </div>
+    </div>
+</body>
+</html>

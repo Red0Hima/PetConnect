@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascota - Inicio de Sesión</title>
+    <link rel="stylesheet" href="/Auth/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-logo">🐾</div>
+        <h1 class="auth-title">Mundo Mascota</h1>
+        <p class="auth-subtitle">Bienvenido de vuelta</p>
+
+        <div class="success-message" id="successMessage">
+            ¡Registro exitoso! Iniciando sesión...
+        </div>
+
+        <form class="auth-form" id="loginForm">
+            <div class="form-group">
+                <label for="email">Email o Nombre de Usuario</label>
+                <input type="text" id="email" name="email" placeholder="tu@email.com o tu_usuario" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <button type="submit" class="auth-button">Iniciar Sesión</button>
+        </form>
+
+        <div class="auth-toggle">
+            ¿No tienes cuenta? <a href="/Auth/registro.html">Regístrate aquí</a>
+        </div>
+    </div>
+
+    <script src="/Auth/auth.js"></script>
+    <script>
+        // Inicializar formulario de login
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const successMessage = document.getElementById('successMessage');
+
+            // Mostrar mensaje de éxito si viene del registro
+            if (sessionStorage.getItem('registroExitoso')) {
+                successMessage.classList.add('show');
+                sessionStorage.removeItem('registroExitoso');
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 3000);
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleLogin();
+            });
+        });
+
+        function handleLogin() {
+            // NO limpiar localStorage aquí: eso borraba los usuarios registrados
+            // (antes se llamaba a localStorage.clear() y causaba 'Usuario no encontrado')
+            
+            const emailOUsuario = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+
+            // Limpiar errores previos
+            emailError.classList.remove('show');
+            passwordError.classList.remove('show');
+
+            let hasError = false;
+
+            // Validar que ingresó algo
+            if (!emailOUsuario) {
+                emailError.textContent = 'Por favor ingresa tu email o nombre de usuario';
+                emailError.classList.add('show');
+                hasError = true;
+            }
+
+            // Validar contraseña
+            if (!password) {
+                passwordError.textContent = 'Por favor ingresa tu contraseña';
+                passwordError.classList.add('show');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // Obtener usuarios registrados del localStorage
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            // Buscar por email O por username (nombre de usuario)
+            const usuarioExistente = usuarios.find(u => 
+                u.email === emailOUsuario || u.username === emailOUsuario
+            );
+
+            if (!usuarioExistente) {
+                emailError.textContent = 'Email o nombre de usuario no encontrado';
+                emailError.classList.add('show');
+                return;
+            }
+
+            if (usuarioExistente.password !== password) {
+                passwordError.textContent = 'Contraseña incorrecta';
+                passwordError.classList.add('show');
+                return;
+            }
+
+            // Login exitoso
+            localStorage.setItem('usuarioActual', JSON.stringify(usuarioExistente));
+            setTimeout(() => {
+                window.location.href = '/PaginaPrincipal/index.html';
+            }, 500);
+        }
+    </script>
+</body>
+</html>

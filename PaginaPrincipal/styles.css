@@ -1,0 +1,464 @@
+/* Paleta de Colores Cozy/Relax: */
+:root {
+    --color-fondo: #fbf8f4; /* Blanco cálido, casi crema */
+    --color-principal: #a8a39a; /* Gris topo claro/Tostado suave */
+    --color-acento: #8c847d; /* Tostado medio */
+    --color-texto: #333333; /* Gris oscuro para legibilidad */
+    --color-secundario: #c2d4c0; /* Verde menta o salvia suave */
+}
+
+/* Base y Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif; /* Fuente simple y legible */
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* Encabezado y Navegación */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: var(--color-fondo);
+    border-bottom: 1px solid var(--color-principal);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--color-acento);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transición suave */
+    border-radius: 5px;
+}
+
+/* Animación de cursor sobre enlaces (minimalista) */
+.nav-link:hover {
+    color: var(--color-fondo); /* Texto se aclara */
+    background-color: var(--color-acento); /* Fondo tostado suave */
+}
+
+/* Menú desplegable de usuario */
+.user-menu-wrapper {
+    position: relative;
+}
+
+.user-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-texto);
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.user-menu-btn:hover {
+    color: var(--color-fondo);
+    background-color: var(--color-acento);
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--color-principal);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    z-index: 1000;
+    min-width: 180px;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown a,
+.user-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    color: var(--color-texto);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+    background-color: var(--color-fondo);
+    color: var(--color-acento);
+}
+
+.user-dropdown button:first-child,
+.user-dropdown a:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.user-dropdown button:last-child,
+.user-dropdown a:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+.logout-btn {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+/* Contenido Principal y Secciones */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.seccion {
+    padding: 80px 0;
+    text-align: center;
+    border-bottom: 1px dashed var(--color-secundario);
+}
+
+#inicio {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: var(--color-acento);
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2em;
+    color: var(--color-texto);
+    margin-bottom: 40px;
+}
+
+p {
+    margin-bottom: 20px;
+    color: var(--color-texto);
+}
+
+/* Botones de Llamada a la Acción (CTA) */
+.cta-button {
+    display: inline-block;
+    background-color: var(--color-secundario);
+    color: var(--color-texto);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px; /* Bordes redondeados para un look suave */
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Mini animación en todos los cambios */
+}
+
+/* Animación de cursor sobre botones (intuitiva) */
+.cta-button:hover {
+    background-color: var(--color-acento);
+    color: var(--color-fondo);
+    transform: translateY(-3px); /* Pequeño desplazamiento hacia arriba */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo de la Enciclopedia (Grid) */
+.enciclopedia-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.raza-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra muy suave */
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Mini animación */
+}
+
+/* Animación de cursor sobre tarjetas de raza */
+.raza-card:hover {
+    transform: scale(1.03); /* Ligeramente más grande */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra más notable */
+}
+
+.raza-card h3 {
+    color: var(--color-acento);
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+/* Formulario de Contacto (Minimalista) */
+#contacto form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 20px auto 0;
+    gap: 15px;
+}
+
+#contacto input[type="text"],
+#contacto input[type="email"],
+#contacto textarea {
+    padding: 12px;
+    border: 1px solid var(--color-principal);
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease; /* Animación de enfoque */
+}
+
+#contacto input:focus,
+#contacto textarea:focus {
+    border-color: var(--color-secundario);
+    outline: none;
+}
+
+#contacto textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--color-acento);
+    color: var(--color-fondo);
+    font-size: 0.9em;
+}
+
+/* ================================================== */
+/* RESPONSIVO - ADAPTACIÓN MÓVIL Y TABLETS */
+/* ================================================== */
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+    /* Header y navegación */
+    header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 1.5em;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 10px;
+    }
+
+    .user-menu-wrapper {
+        width: 100%;
+    }
+
+    .user-menu-btn {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .user-dropdown {
+        width: 100%;
+        right: auto;
+        left: 0;
+    }
+
+    /* Contenido principal */
+    main {
+        padding: 15px;
+    }
+
+    .seccion {
+        padding: 40px 0;
+    }
+
+    #inicio {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 25px;
+    }
+
+    p {
+        font-size: 0.95em;
+    }
+
+    /* Botones */
+    .cta-button {
+        padding: 10px 25px;
+        font-size: 0.95em;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* Grid de enciclopedia */
+    .enciclopedia-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .raza-card {
+        padding: 15px;
+    }
+
+    .raza-card h3 {
+        font-size: 1.2em;
+    }
+
+    /* Formulario de contacto */
+    #contacto form {
+        padding: 0 10px;
+        max-width: 100%;
+    }
+
+    #contacto input[type="text"],
+    #contacto input[type="email"],
+    #contacto textarea {
+        padding: 10px;
+        font-size: 16px; /* Evita zoom automático en iOS */
+    }
+}
+
+/* Móviles medianos (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    /* Header */
+    header {
+        padding: 20px 30px;
+    }
+
+    .logo {
+        font-size: 1.6em;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin-left: 15px;
+    }
+
+    /* Contenido */
+    main {
+        padding: 20px;
+    }
+
+    .seccion {
+        padding: 60px 0;
+    }
+
+    #inicio {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    /* Grid de enciclopedia */
+    .enciclopedia-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    /* Formulario */
+    #contacto input[type="text"],
+    #contacto input[type="email"],
+    #contacto textarea {
+        font-size: 16px; /* Evita zoom automático en iOS */
+    }
+}
+
+/* Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    header {
+        padding: 20px 35px;
+    }
+
+    main {
+        max-width: 900px;
+    }
+
+    .enciclopedia-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablets horizontales y pantallas medianas (1025px - 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    main {
+        max-width: 1000px;
+    }
+
+    .enciclopedia-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

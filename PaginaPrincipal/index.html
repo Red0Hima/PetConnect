@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascota - Enciclopedia y Comunidad</title>
+    <link rel="stylesheet" href="/PaginaPrincipal/styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🐾 Mundo Mascota</div>
+        <nav>
+            <ul>
+                <li><a href="/PaginaPrincipal/index.html" class="nav-link">Inicio</a></li>
+                <li><a href="/Enciclopedia/enciclopedia.html" class="nav-link">Enciclopedia</a></li>
+                <li><a href="/Contacto/contacto.html" class="nav-link">Contacto</a></li>
+                <li><a href="/Auth/login.html" class="nav-link">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="seccion">
+            <h1>Bienvenido a Mundo Mascota</h1>
+            <h3>Tu fuente confiable para la conexión y el conocimiento animal 🐶🐱</h3>
+            <p>Tu rincón acogedor para descubrir y aprender sobre tus amigos peludos. Encuentra información detallada sobre razas de perros y gatos en un ambiente tranquilo y relajante. ¡Explora y únete a nuestra comunidad!</p>
+            <p style="max-width: 800px; margin: 0 auto 30px;">
+                Sumérgete en un espacio diseñado para el **bienestar animal**. Ya seas un dueño experimentado o estés considerando adoptar a tu primera mascota, aquí encontrarás guías de cuidado, datos fascinantes y una comunidad de apoyo lista para compartir experiencias y consejos. Nuestro objetivo es fortalecer el vínculo humano-animal a través de la educación y el respeto.
+            </p>
+            <a href="/Enciclopedia/enciclopedia.html" class="cta-button">
+                Explorar Razas
+            </a>
+        </section>
+    </main>
+    <script src="/PaginaPrincipal/cookies.js"></script>
+    <script src="/PaginaPrincipal/script.js"></script>
+    <script>
+        // Mostrar nombre de usuario si está autenticado
+        document.addEventListener('DOMContentLoaded', () => {
+            // Esperar a que cookies.js se ejecute primero
+            setTimeout(() => {
+                const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+                const authLink = document.querySelector('a[href="/Auth/login.html"]');
+                if (usuario && usuario.username && authLink) {
+                    // Crear menú desplegable
+                    authLink.style.display = 'none'; // Ocultar enlace original
+                    const li = authLink.parentElement;
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'user-menu-wrapper';
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'user-menu-btn';
+                    btn.textContent = usuario.username;
+                    
+                    const dropdown = document.createElement('div');
+                    dropdown.className = 'user-dropdown';
+                    dropdown.innerHTML = '<button class="logout-btn">Cerrar sesión</button>';
+                    
+                    wrapper.appendChild(btn);
+                    wrapper.appendChild(dropdown);
+                    li.appendChild(wrapper);
+                    
+                    btn.addEventListener('click', () => {
+                        dropdown.classList.toggle('show');
+                    });
+                    
+                    document.addEventListener('click', (e) => {
+                        if (!wrapper.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+                    
+                    const logoutBtn = dropdown.querySelector('.logout-btn');
+                    logoutBtn.addEventListener('click', () => {
+                        localStorage.removeItem('usuarioActual');
+                        localStorage.removeItem('token');
+                        window.location.href = '/Auth/login.html';
+                    });
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

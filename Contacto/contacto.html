@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascota - Contacto</title>
+    <link rel="stylesheet" href="/Contacto/contacto.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🐾 Mundo Mascota</div>
+        <nav>
+            <ul>
+                <li><a href="/PaginaPrincipal/index.html" class="nav-link">Inicio</a></li>
+                <li><a href="/Enciclopedia/enciclopedia.html" class="nav-link">Enciclopedia</a></li>
+                <li><a href="/Contacto/contacto.html" class="nav-link">Contacto</a></li>
+                <li><a href="/Auth/login.html" class="nav-link">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="contacto" class="seccion">
+            <h1>Contacto</h1>
+            <h3>¿Tienes alguna sugerencia o comentario?</h3>
+            <p style="max-width: 700px; margin: 0 auto 40px;">
+                Nos encantaría escucharte. Si tienes alguna duda, sugerencia o simplemente quieres compartir tu experiencia con nosotros, no dudes en contactarnos a través de los siguientes medios:
+            </p>
+
+            <div class="contacto-info">
+                <div class="contacto-item">
+                    <div class="contacto-icon">📧</div>
+                    <h3>Correo Electrónico</h3>
+                    <a href="mailto:contacto@mundomascota.com">contacto@mundomascota.com</a>
+                </div>
+
+                <div class="contacto-item">
+                    <div class="contacto-icon">📞</div>
+                    <h3>Teléfono</h3>
+                    <a href="tel:+525512345678">+52 55 1234 5678</a>
+                </div>
+            </div>
+
+            <p style="max-width: 700px; margin: 40px auto 0; font-size: 0.95em; color: var(--color-principal);">
+                Estamos aquí para ayudarte en todo lo relacionado con el bienestar de tus mascotas. Tu opinión es importante para nosotros.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mundo Mascota. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/PaginaPrincipal/cookies.js"></script>
+    <script>
+        // Mostrar nombre de usuario si está autenticado
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+                const authLink = document.querySelector('a[href="/Auth/login.html"]');
+                if (usuario && usuario.username && authLink) {
+                    authLink.style.display = 'none';
+                    const li = authLink.parentElement;
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'user-menu-wrapper';
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'user-menu-btn';
+                    btn.textContent = usuario.username;
+                    
+                    const dropdown = document.createElement('div');
+                    dropdown.className = 'user-dropdown';
+                    dropdown.innerHTML = '<button class="logout-btn">Cerrar sesión</button>';
+                    
+                    wrapper.appendChild(btn);
+                    wrapper.appendChild(dropdown);
+                    li.appendChild(wrapper);
+                    
+                    btn.addEventListener('click', () => {
+                        dropdown.classList.toggle('show');
+                    });
+                    
+                    document.addEventListener('click', (e) => {
+                        if (!wrapper.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+                    
+                    const logoutBtn = dropdown.querySelector('.logout-btn');
+                    logoutBtn.addEventListener('click', () => {
+                        localStorage.removeItem('usuarioActual');
+                        localStorage.removeItem('token');
+                        window.location.href = '/Auth/login.html';
+                    });
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

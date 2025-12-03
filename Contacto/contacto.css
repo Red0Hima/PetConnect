@@ -1,0 +1,367 @@
+/* Paleta de Colores Cozy/Relax: */
+:root {
+    --color-fondo: #fbf8f4; /* Blanco cálido, casi crema */
+    --color-principal: #a8a39a; /* Gris topo claro/Tostado suave */
+    --color-acento: #8c847d; /* Tostado medio */
+    --color-texto: #333333; /* Gris oscuro para legibilidad */
+    --color-secundario: #c2d4c0; /* Verde menta o salvia suave */
+}
+
+/* Base y Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* Encabezado y Navegación */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: var(--color-fondo);
+    border-bottom: 1px solid var(--color-principal);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--color-acento);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    color: var(--color-fondo);
+    background-color: var(--color-acento);
+}
+
+/* Menú de usuario */
+.user-menu-wrapper {
+    position: relative;
+}
+
+.user-menu-btn {
+    background: none;
+    border: 1px solid var(--color-principal);
+    cursor: pointer;
+    color: var(--color-texto);
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.user-menu-btn:hover {
+    color: var(--color-fondo);
+    background-color: var(--color-acento);
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--color-principal);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    z-index: 1000;
+    min-width: 180px;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    color: var(--color-texto);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+}
+
+.user-dropdown button:hover {
+    background-color: var(--color-fondo);
+    color: var(--color-acento);
+}
+
+.logout-btn {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+/* Contenido Principal */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.seccion {
+    padding: 80px 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: var(--color-acento);
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: var(--color-texto);
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 20px;
+    color: var(--color-texto);
+}
+
+/* Información de Contacto */
+.contacto-info {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.contacto-item {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    min-width: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contacto-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.contacto-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.contacto-item h3 {
+    color: var(--color-acento);
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.contacto-item a {
+    color: var(--color-secundario);
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.contacto-item a:hover {
+    color: var(--color-acento);
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--color-acento);
+    color: var(--color-fondo);
+    font-size: 0.9em;
+    margin-top: 60px;
+}
+
+/* ================================================== */
+/* RESPONSIVO - ADAPTACIÓN MÓVIL Y TABLETS */
+/* ================================================== */
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 1.5em;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 10px;
+    }
+
+    .user-menu-wrapper {
+        width: 100%;
+    }
+
+    .user-menu-btn {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .user-dropdown {
+        width: 100%;
+        right: auto;
+        left: 0;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    .seccion {
+        padding: 40px 0;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    .contacto-info {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .contacto-item {
+        min-width: 100%;
+        max-width: 320px;
+        padding: 30px 20px;
+    }
+
+    .contacto-icon {
+        font-size: 2.5em;
+    }
+
+    .contacto-item h3 {
+        font-size: 1.1em;
+    }
+
+    .contacto-item a {
+        font-size: 1em;
+    }
+}
+
+/* Móviles medianos (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    header {
+        padding: 20px 30px;
+    }
+
+    .logo {
+        font-size: 1.6em;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin-left: 15px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .seccion {
+        padding: 60px 0;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h3 {
+        font-size: 1.3em;
+    }
+
+    .contacto-info {
+        flex-direction: column;
+        gap: 35px;
+        align-items: center;
+    }
+
+    .contacto-item {
+        max-width: 400px;
+    }
+}
+
+/* Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    header {
+        padding: 20px 35px;
+    }
+
+    main {
+        max-width: 900px;
+    }
+
+    .contacto-info {
+        gap: 50px;
+    }
+}

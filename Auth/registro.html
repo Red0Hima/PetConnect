@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascota - Registro</title>
+    <link rel="stylesheet" href="/Auth/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-logo">🐾</div>
+        <h1 class="auth-title">Mundo Mascota</h1>
+        <p class="auth-subtitle">Únete a nuestra comunidad</p>
+
+        <form class="auth-form" id="registroForm">
+            <div class="form-group">
+                <label for="regUsername">Nombre de usuario</label>
+                <input type="text" id="regUsername" name="username" placeholder="Tu nombre de usuario" required>
+                <div class="error-message" id="regUsernameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" name="email" placeholder="tu@email.com" required>
+                <div class="error-message" id="regEmailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword">Contraseña</label>
+                <input type="password" id="regPassword" name="password" placeholder="Tu contraseña" required>
+                <div class="error-message" id="regPasswordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="regPasswordConfirm">Confirmar Contraseña</label>
+                <input type="password" id="regPasswordConfirm" name="passwordConfirm" placeholder="Confirma tu contraseña" required>
+                <div class="error-message" id="regPasswordConfirmError"></div>
+            </div>
+
+            <button type="submit" class="auth-button">Registrarse</button>
+        </form>
+
+        <div class="auth-toggle">
+            ¿Ya tienes cuenta? <a href="/Auth/login.html">Inicia sesión aquí</a>
+        </div>
+    </div>
+
+    <script src="/Auth/auth.js"></script>
+    <script>
+        // Inicializar formulario de registro
+        document.addEventListener('DOMContentLoaded', () => {
+            const registroForm = document.getElementById('registroForm');
+
+            registroForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleRegistro();
+            });
+        });
+
+        function handleRegistro() {
+            const username = document.getElementById('regUsername').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const passwordConfirm = document.getElementById('regPasswordConfirm').value;
+            
+            const regUsernameError = document.getElementById('regUsernameError');
+            const regEmailError = document.getElementById('regEmailError');
+            const regPasswordError = document.getElementById('regPasswordError');
+            const regPasswordConfirmError = document.getElementById('regPasswordConfirmError');
+
+            // Limpiar errores previos
+            regUsernameError.classList.remove('show');
+            regEmailError.classList.remove('show');
+            regPasswordError.classList.remove('show');
+            regPasswordConfirmError.classList.remove('show');
+
+            let hasError = false;
+
+            // Validar nombre de usuario
+            if (!username) {
+                regUsernameError.textContent = 'Por favor ingresa un nombre de usuario';
+                regUsernameError.classList.add('show');
+                hasError = true;
+            } else if (username.length < 3) {
+                regUsernameError.textContent = 'El nombre de usuario debe tener al menos 3 caracteres';
+                regUsernameError.classList.add('show');
+                hasError = true;
+            }
+
+            // Validar email
+            if (!email) {
+                regEmailError.textContent = 'Por favor ingresa un email';
+                regEmailError.classList.add('show');
+                hasError = true;
+            } else if (!validarEmail(email)) {
+                regEmailError.textContent = 'Por favor ingresa un email válido';
+                regEmailError.classList.add('show');
+                hasError = true;
+            }
+
+            // Validar contraseña
+            if (!password) {
+                regPasswordError.textContent = 'Por favor ingresa una contraseña';
+                regPasswordError.classList.add('show');
+                hasError = true;
+            } else if (password.length < 6) {
+                regPasswordError.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                regPasswordError.classList.add('show');
+                hasError = true;
+            }
+
+            // Validar confirmación de contraseña
+            if (!passwordConfirm) {
+                regPasswordConfirmError.textContent = 'Por favor confirma tu contraseña';
+                regPasswordConfirmError.classList.add('show');
+                hasError = true;
+            }
+
+            // Validar que las contraseñas coincidan
+            if (password && passwordConfirm && password !== passwordConfirm) {
+                regPasswordConfirmError.textContent = 'Las contraseñas no coinciden';
+                regPasswordConfirmError.classList.add('show');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // Verificar si el email ya está registrado
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            if (usuarios.find(u => u.email === email)) {
+                regEmailError.textContent = 'Este email ya está registrado';
+                regEmailError.classList.add('show');
+                return;
+            }
+
+            // Guardar nuevo usuario
+            const nuevoUsuario = {
+                username: username,
+                email: email,
+                password: password,
+                fechaRegistro: new Date().toISOString()
+            };
+
+            usuarios.push(nuevoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+            // Marcar registro exitoso y redirigir a login
+            sessionStorage.setItem('registroExitoso', 'true');
+            setTimeout(() => {
+                window.location.href = '/Auth/login.html';
+            }, 500);
+        }
+
+        function validarEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+    </script>
+</body>
+</html>
