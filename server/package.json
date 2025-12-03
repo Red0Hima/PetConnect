@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Backend for PetConnect using Express and SQLite",
   "main": "server.js",
+  "engines": {
+    "node": ">=16.x"
+  },
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "echo 'No build needed'"
   },
   "keywords": [],
   "author": "",
